@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Queen — בדיקה מקומית</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Queen">
+<style>
+:root{
+  --bg1:#7B2CBF; /* סגול מלכותי */
+  --bg2:#FFB6C1; /* וורוד עדין */
+  --accent:#00CED1; /* טורקיז */
+  --gold:#FFD700;
+  --card-radius:18px;
+  --text:#111;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family: "Arial", "Alef", "Noto Sans Hebrew", sans-serif;background: linear-gradient(135deg,var(--bg1), #5500ff 50%, var(--bg2)); color:white; -webkit-font-smoothing:antialiased}
+.app{
+  max-width:420px;margin:0 auto;padding:18px;min-height:100vh;display:flex;flex-direction:column;gap:12px;
+}
+.header{display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:20px;display:flex;gap:10px;align-items:center}
+.logo .q{background:linear-gradient(45deg,var(--gold),#fff);color:var(--bg1);padding:6px 10px;border-radius:8px;font-weight:900}
+.subtitle{font-size:12px;opacity:0.95}
+.container{background:rgba(255,255,255,0.06);border-radius:16px;padding:12px;flex:1;display:flex;flex-direction:column;}
+.center{display:flex;flex:1;align-items:center;justify-content:center;flex-direction:column}
+.btn{
+  background:white;color:var(--bg1);border:none;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.15);
+}
+.small{padding:6px 10px;border-radius:10px;font-size:14px}
+.info{font-size:13px;color:rgba(255,255,255,0.95);margin-bottom:6px;text-align:center}
+.card-stack{position:relative;height:60vh;display:flex;align-items:center;justify-content:center}
+.card{
+  position:absolute; width:88%; max-width:360px; height:66%; border-radius:18px; background:#fff;color:#111;
+  box-shadow:0 18px 40px rgba(0,0,0,0.35); overflow:hidden; touch-action:none;
+  display:flex;flex-direction:column;
+}
+.card .img{flex:1;background-size:cover;background-position:center}
+.card .meta{padding:12px}
+.card .meta .name{font-weight:800}
+.controls{display:flex;gap:12px;justify-content:center;padding:12px}
+.control-btn{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.95);color:var(--bg1);font-weight:800;border:none;box-shadow:0 6px 18px rgba(0,0,0,0.2);cursor:pointer}
+.chat-panel{position:fixed;left:12px;right:12px;bottom:12px;max-width:420px;margin:0 auto;background:rgba(0,0,0,0.6);border-radius:14px;padding:8px;display:none;flex-direction:column;gap:8px}
+.chat-header{display:flex;align-items:center;justify-content:space-between;color:white}
+.messages{max-height:38vh;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
+.msg{align-self:flex-end;background:linear-gradient(90deg,var(--bg2),var(--bg1));padding:8px 12px;border-radius:12px;color:white;max-width:75%}
+.msg.other{align-self:flex-start;background:rgba(255,255,255,0.92);color:var(--text)}
+.input-row{display:flex;gap:8px}
+.input-row input{flex:1;padding:8px;border-radius:10px;border:none}
+.input-row button{padding:8px 12px;border-radius:10px;border:none;background:var(--accent);color:white}
+.form{display:flex;flex-direction:column;gap:10px}
+.input{background:rgba(255,255,255,0.08);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);color:white}
+.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+.note{font-size:12px;opacity:0.95}
+.footer{font-size:12px;opacity:0.9;text-align:center;padding:8px}
+.small-link{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:6px 10px;border-radius:10px;color:white}
+
+/* responsive */
+@media (max-width:420px){
+  .card{height:62%}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="header">
+    <div class="logo"><div class="q">Q</div><div>Queen <div class="subtitle">teen + queer</div></div></div>
+    <div><button id="open-settings" class="small btn">הגדרות</button></div>
+  </div>
+
+  <div class="container" id="mainContainer">
+    <div id="onboard" class="center">
+      <h2>ברוך הבא ל־Queen 👑</h2>
+      <p class="info">מקום בטוח להכיר נערות ונערים להט״ב בגיל 13–21. החלק ימינה אם אהבת, שמאלה אם לא.</p>
+      <div style="width:100%;max-width:360px;">
+        <div class="form" id="regForm">
+          <input id="inputName" class="input" placeholder="שם שיוצג (כינוי)" />
+          <input id="inputDOB" class="input" placeholder="תאריך לידה (YYYY-MM-DD)" />
+          <input id="inputCity" class="input" placeholder="עיר (אופציונלי)" />
+          <input id="inputGender" class="input" placeholder="מגדר (דוגמא: זכר/נקבה/Non-binary)" />
+          <input id="inputOrient" class="input" placeholder="נטייה/משיכה (דוגמ.: הומו/בי/פאן/אחר)" />
+          <button id="btnStart" class="btn">התחל להכיר</button>
+          <p class="note">אין חשיפה של פרטים אישיים. הנתונים נשמרים רק במכשיר שלך (localStorage).</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="swipeArea" style="display:none;flex:1;flex-direction:column">
+      <div style="padding:12px;text-align:center">
+        <strong id="welcomeName">היי</strong><div class="note">החלק או השתמש בכפתורים</div>
+      </div>
+      <div class="card-stack" id="cardStack"></div>
+      <div class="controls">
+        <button id="noBtn" class="control-btn">✖</button>
+        <button id="likeBtn" class="control-btn">❤</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">גרסת בדיקה מקומית — אין שיתוף נתונים ברשת. אפשר להוסיף למסך הבית דרך שיתוף.</div>
+</div>
+
+<!-- chat panel -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div id="chatTitle">שיחה</div>
+    <div><button id="closeChat" class="small-link">סגור</button></div>
+  </div>
+  <div class="messages" id="messages"></div>
+  <div class="input-row">
+    <input id="msgInput" placeholder="כתוב הודעה..." />
+    <button id="sendMsg">שלח</button>
+  </div>
+</div>
+
+<script>
+/* ======= נתונים מדומים ======= */
+const sampleProfiles = [
+  {id:'p1',name:'נועה',age:17,city:'ת״א',img:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=60',bio:'מנגנת בפסנתר, אוהבת אירוויזיון',tags:['מוזיקה','אירוויזיון']},
+  {id:'p2',name:'ים',age:18,city:'חדרה',img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=60',bio:'גיימר, אוהב קומיקס',tags:['גיימינג','קומיקס']},
+  {id:'p3',name:'ליה',age:16,city:'חיפה',img:'https://images.unsplash.com/photo-1524504388940-1c1d4d0b5b2a?auto=format&fit=crop&w=800&q=60',bio:'שרה בפזמונים',tags:['שירה','פזמונים']},
+  {id:'p4',name:'דן',age:20,city:'ירושלים',img:'https://images.unsplash.com/photo-1531123414780-f3a747c1d5a0?auto=format&fit=crop&w=800&q=60',bio:'צלם חובב',tags:['צילום','טיולים']},
+  {id:'p5',name:'מיה',age:15,city:'רמת גן',img:'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=60',bio:'מאיירת',tags:['אומנות','דיגיטל']},
+];
+
+/* ======= עזרי LocalStorage ======= */
+const LS_PREFIX = 'queen_local_v1_';
+function save(key,val){localStorage.setItem(LS_PREFIX+key,JSON.stringify(val))}
+function load(key){const v=localStorage.getItem(LS_PREFIX+key); return v?JSON.parse(v):null}
+
+/* ======= UI וניהול ======= */
+const onboard = document.getElementById('onboard');
+const swipeArea = document.getElementById('swipeArea');
+const regForm = document.getElementById('regForm');
+const btnStart = document.getElementById('btnStart');
+const cardStack = document.getElementById('cardStack');
+const welcomeName = document.getElementById('welcomeName');
+const chatPanel = document.getElementById('chatPanel');
+const chatTitle = document.getElementById('chatTitle');
+const messagesEl = document.getElementById('messages');
+const msgInput = document.getElementById('msgInput');
+const sendMsg = document.getElementById('sendMsg');
+const closeChat = document.getElementById('closeChat');
+const openSettings = document.getElementById('open-settings');
+
+let currentUser = load('me') || null;
+let profiles = load('profiles') || sampleProfiles;
+let feed = [];
+let topCard = null;
+let activeChatTarget = null;
+
+/* ======= הרשמה פשוטה וולידציה של גיל ======= */
+btnStart.addEventListener('click',()=>{
+  const name = document.getElementById('inputName').value.trim();
+  const dob = document.getElementById('inputDOB').value.trim();
+  const city = document.getElementById('inputCity').value.trim();
+  const gender = document.getElementById('inputGender').value.trim();
+  const orient = document.getElementById('inputOrient').value.trim();
+  if(!name || !dob){ alert('מילא שם ותאריך לידה'); return; }
+  // בודקים פורמט פשוט YYYY-MM-DD
+  const d = new Date(dob);
+  if(isNaN(d.getTime())){ alert('פורמט תאריך לא תקין — השתמש ב‑YYYY-MM-DD'); return; }
+  const age = (new Date().getFullYear()) - d.getFullYear();
+  if(age < 13 || age > 21){ alert('טווח הגילאים המותר: 13–21'); return; }
+  currentUser = {id:'me',name, dob, age, city, gender, orient};
+  save('me',currentUser);
+  startApp();
+});
+
+/* ======= התחלת אפליקציה ======= */
+function startApp(){
+  onboard.style.display='none';
+  swipeArea.style.display='flex';
+  welcomeName.textContent = 'היי ' + (currentUser?.name || '');
+  // בנה פיד
+  feed = profiles.slice(); // העתק
+  renderCards();
+}
+
+/* ======= יצירת כרטיסיות ======= */
+function renderCards(){
+  cardStack.innerHTML='';
+  for(let i=feed.length-1;i>=0;i--){
+    const p = feed[i];
+    const c = document.createElement('div');
+    c.className='card';
+    c.dataset.id = p.id;
+    c.innerHTML = `
+      <div class="img" style="background-image:url('${p.img}')"></div>
+      <div class="meta">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="name">${p.name}, ${p.age}</div>
+            <div style="font-size:13px;color:#666;margin-top:6px">${p.city} • ${p.bio}</div>
+          </div>
+          <div style="text-align:left;font-size:12px;color:#999">${p.tags.join(' • ')}</div>
+        </div>
+      </div>`;
+    addCardEvents(c,p);
+    cardStack.appendChild(c);
+  }
+  topCard = cardStack.querySelector('.card:last-child');
+}
+
+/* ======= אירועים לחלק ולחבב ======= */
+function addCardEvents(el,profile){
+  let startX=0, startY=0, currentX=0, currentY=0, dragging=false;
+  el.addEventListener('pointerdown', (e)=>{
+    dragging=true; el.setPointerCapture(e.pointerId);
+    startX = e.clientX; startY=e.clientY;
+  });
+  el.addEventListener('pointermove', (e)=>{
+    if(!dragging) return;
+    currentX = e.clientX - startX;
+    currentY = e.clientY - startY;
+    el.style.transform = `translateX(${currentX}px) rotate(${currentX/20}deg)`;
+  });
+  el.addEventListener('pointerup', (e)=>{
+    dragging=false; el.releasePointerCapture(e.pointerId);
+    if(Math.abs(currentX) > 100){
+      if(currentX > 0){ like(profile.id); animateOut(el,1); }
+      else { nope(profile.id); animateOut(el,-1); }
+    } else {
+      el.style.transform = '';
+    }
+    currentX=0; currentY=0;
+  });
+  // double tap to open chat
+  el.addEventListener('dblclick', ()=>{ openChatWith(profile.id) });
+}
+
+function animateOut(el,dir){
+  el.style.transition='transform 300ms ease-out, opacity 300ms';
+  el.style.transform = `translateX(${dir*1200}px) rotate(${dir*30}deg)`;
+  el.style.opacity='0';
+  setTimeout(()=>{ el.remove(); topCard = cardStack.querySelector('.card:last-child'); }, 320);
+}
+
+/* ======= לחוצי בקרת UI ======= */
+document.getElementById('likeBtn').addEventListener('click',()=>{
+  const c = cardStack.querySelector('.card:last-child'); if(!c) return;
+  const id = c.dataset.id; like(id); animateOut(c,1);
+});
+document.getElementById('noBtn').addEventListener('click',()=>{
+  const c = cardStack.querySelector('.card:last-child'); if(!c) return;
+  const id = c.dataset.id; nope(id); animateOut(c,-1);
+});
+
+/* ======= פונקציות לייק/נופה ======= */
+function like(id){
+  // שמור כחיבה מקומית
+  const likes = load('likes') || [];
+  likes.push({from:currentUser.id,to:id,ts:Date.now()});
+  save('likes',likes);
+  alert('שלחת חיבה ל־' + visibleName(id) + '. ניתן לשלוח הודעה מיידית.');
+  openChatWith(id);
+}
+function nope(id){
+  // שים בצד
+  feed = feed.filter(p=>p.id!==id); save('profiles',profiles);
+}
+
+/* ======= צ׳אט מקומי ======= */
+function openChatWith(id){
+  activeChatTarget = id;
+  const p = profiles.find(pp=>pp.id===id);
+  chatTitle.textContent = p ? (p.name + ' • ' + p.city) : 'שיחה';
+  chatPanel.style.display='flex';
+  renderMessages();
+}
+closeChat.addEventListener('click',()=>{ chatPanel.style.display='none'; activeChatTarget=null; });
+
+sendMsg.addEventListener('click',()=>{
+  const txt = msgInput.value.trim(); if(!txt) return;
+  const msgs = load('msgs') || {};
+  const convKey = conversationKey(activeChatTarget);
+  msgs[convKey] = msgs[convKey] || [];
+  msgs[convKey].push({from:currentUser.id, text:txt, ts:Date.now()});
+  save('msgs',msgs);
+  msgInput.value='';
+  renderMessages();
+});
+
+function renderMessages(){
+  messagesEl.innerHTML='';
+  const msgs = load('msgs') || {};
+  const convKey = conversationKey(activeChatTarget);
+  const list = msgs[convKey] || [];
+  list.forEach(m=>{
+    const d = document.createElement('div');
+    d.className = 'msg' + (m.from===currentUser.id ? '' : ' other');
+    d.textContent = m.text;
+    messagesEl.appendChild(d);
+  });
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+function conversationKey(targetId){ return [currentUser.id, targetId].sort().join('__'); }
+function visibleName(id){ const p = profiles.find(pp=>pp.id===id); return p? p.name : id; }
+
+/* ======= טעינת משתמש אם קיים ======= */
+if(currentUser){
+  // show swipe directly
+  startApp();
+}
+
+/* ======= הגדרות פשוטות === */
+openSettings.addEventListener('click', ()=>{
+  const ans = prompt('הקלד "reset" כדי למחוק הכל או בטל כדי לסגור');
+  if(ans === 'reset'){ localStorage.clear(); alert('הנתונים נמחקו. טען מחדש.'); location.reload(); }
+});
+
+/* ======= הערות והגבלות למשתמש ======= */
+console.log('Queen local demo — data saved only on this מכשיר. This is NOT a real server.');
+
+/* ======= קטנות: אפשרות להוסיף פרופיל עצמי מהירה (דמו) ======= */
+</script>
+</body>
+</html>
