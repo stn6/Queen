@@ -1,0 +1,121 @@
+:root {
+    --bg1: #7B2CBF; /* סגול מלכותי */
+    --bg2: #FFB6C1; /* ורוד עדין */
+    --accent: #00CED1; /* טורקיז */
+    --gold: #FFD700; /* זהב */
+    --card-radius: 18px;
+    --text: #111;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, var(--bg1), #5500ff 50%, var(--bg2));
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    direction: rtl;
+}
+
+.app {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 18px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.logo .q {
+    background: linear-gradient(45deg, var(--gold), #fff);
+    color: var(--bg1);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 900;
+}
+
+.subtitle {
+    font-size: 12px;
+    opacity: 0.95;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.btn {
+    background: white;
+    color: var(--bg1);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.small {
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.info {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 6px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+}
+
+.input {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: white;
+}
+
+.note {
+    font-size: 12px;
+    opacity: 0.95;
+}
