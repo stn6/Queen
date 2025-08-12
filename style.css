@@ -1,121 +1,137 @@
-:root {
-    --bg1: #7B2CBF; /* סגול מלכותי */
-    --bg2: #FFB6C1; /* ורוד עדין */
-    --accent: #00CED1; /* טורקיז */
-    --gold: #FFD700; /* זהב */
-    --card-radius: 18px;
-    --text: #111;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background: linear-gradient(135deg, var(--bg1), #5500ff 50%, var(--bg2));
-    color: white;
-    -webkit-font-smoothing: antialiased;
+body {
     direction: rtl;
-}
-
-.app {
-    max-width: 420px;
-    margin: 0 auto;
-    padding: 18px;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-weight: 800;
-    font-size: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.logo .q {
-    background: linear-gradient(45deg, var(--gold), #fff);
-    color: var(--bg1);
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-weight: 900;
-}
-
-.subtitle {
-    font-size: 12px;
-    opacity: 0.95;
-}
-
-.container {
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 12px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.center {
-    display: flex;
-    flex: 1;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.registration-container, .profile-card-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-}
-
-.btn {
-    background: white;
-    color: var(--bg1);
-    border: none;
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-}
-
-.small {
-    padding: 6px 10px;
-    border-radius: 10px;
-    font-size: 14px;
-}
-
-.info {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 6px;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    max-width: 450px;
     width: 100%;
-    max-width: 360px;
 }
 
-.input {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+.registration-container h1 {
+    color: #6a1b9a;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.registration-container p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.registration-form .input-group {
+    margin-bottom: 25px;
+    text-align: right;
+}
+
+.registration-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #4a148c;
+}
+
+.registration-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.register-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: #e91e63;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+    background-color: #c2185b;
+}
+
+.terms {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #888;
+}
+
+/* Profile Card Styling */
+.profile-card {
+    background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.profile-info {
+    padding: 20px;
+    text-align: right;
+}
+
+.profile-info h2 {
+    margin: 0 0 10px 0;
+    color: #6a1b9a;
+}
+
+.profile-info p {
+    margin: 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.like-button, .dislike-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dislike-button {
+    background-color: #ff5252;
     color: white;
 }
 
-.note {
-    font-size: 12px;
-    opacity: 0.95;
+.like-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.dislike-button:hover, .like-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }

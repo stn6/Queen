@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Queen - אפליקציית הכרויות לנוער להט"ב</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen - הרשמה</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app">
-        <div class="header">
-            <div class="logo">
-                <span class="q">Q</span>
-                Queen
-                <div class="subtitle">הכרויות לקהילה הצעירה</div>
-            </div>
-            <div>
-                <button id="open-settings" class="btn small">הגדרות</button>
-            </div>
-        </div>
 
-        <div class="container">
-            <div id="onboard" class="center">
-                <h2>ברוכים הבאים ל-Queen 👑</h2>
-                <p class="info">מקום בטוח להכיר נערות ונערים להט"ב מגיל 13 עד 21. החליקו ימינה אם אהבתם, שמאלה אם לא.</p>
-                <div class="form">
-                    <input id="inputName" class="input" placeholder="שם משתמש" />
-                    <input id="inputDOB" class="input" placeholder="תאריך לידה (YYYY-MM-DD)" />
-                    <button id="btnStart" class="btn">התחילו להכיר</button>
-                    <p class="note">הפרטים נשמרים רק במכשיר שלכם ואינם חשופים לאחרים.</p>
-                </div>
+    <div class="registration-container">
+        <h1>הצטרפו לקהילה שלנו!</h1>
+        <p>מלאו את הפרטים שלכם כדי להתחיל להכיר.</p>
+        <form action="#" method="post" class="registration-form">
+            <div class="input-group">
+                <label for="name">שם:</label>
+                <input type="text" id="name" name="name" required>
             </div>
-        </div>
+            <div class="input-group">
+                <label for="dob">תאריך לידה:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <button type="submit" class="register-button">התחילו עכשיו!</button>
+        </form>
+        <p class="terms">
+            על ידי הרשמה, אתם מסכימים לתנאי השימוש ומדיניות הפרטיות שלנו.
+        </p>
     </div>
+
 </body>
 </html>
